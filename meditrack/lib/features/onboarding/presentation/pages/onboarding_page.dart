@@ -1,0 +1,83 @@
+import 'package:flutter/material.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:video_player/video_player.dart';
+
+import 'onboarding_widget.dart';
+
+class OnboardingScreen1 extends StatefulWidget {
+  const OnboardingScreen1({super.key});
+
+  @override
+  State<OnboardingScreen1> createState() => _OnboardingScreen1State();
+}
+
+class _OnboardingScreen1State extends State<OnboardingScreen1> {
+  late VideoPlayerController _controller;
+  late VideoPlayerController _controller2;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset("assets/meditrack.mp4")
+      ..initialize().then((_) {
+        _controller.setLooping(true);
+        _controller.play();
+        setState(() {});
+      });
+    _controller2 = VideoPlayerController.asset("assets/meditrack.mp4")
+      ..initialize().then((_) {
+        _controller2.setLooping(true);
+        _controller2.play();
+        setState(() {});
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> pages = [
+      onBoardingTwoPageReusableContainer(
+        context: context,
+        backColor: Colors.white,
+        imagePath: "assets/images/medi_connection.png",
+        // Image of phone + device
+        title1: "Connect to Your",
+        title2: "MediTrack Device",
+        subTitle:
+            "Seamlessly sync your smartphone with our smart dispenser to automate your medication schedule and stay on track with ease.",
+        controller: _controller,
+      ),
+
+      // PAGE 2: AUTOMATED DISPENSING & SAFETY
+      onBoardingTwoPageReusableContainer(
+        context: context,
+        backColor: const Color(0xFFE0F2F1),
+        // Soft Medical Mint
+        imagePath: "assets/images/medi_safety.png",
+        // Image showing pill tray
+        title1: "Automated &",
+        title2: "Safety-First Care",
+        subTitle:
+            "Your device dispenses pills automatically. If a dose is missed, the tray retracts after 3 minutes to ensure your safety and security.",
+        controller: _controller2,
+      ),
+      onBoardingThirdPageReusableContainer(
+        context: context,
+      ),
+    ];
+
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: LiquidSwipe(
+        pages: pages,
+        enableLoop: false,
+        enableSideReveal: true,
+        fullTransitionValue: 300,
+        slideIconWidget:
+            Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+        onPageChangeCallback: (value) {
+          print("...on slide : - >  $value");
+        },
+      ),
+    );
+  }
+}
