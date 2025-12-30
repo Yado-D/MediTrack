@@ -51,6 +51,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             // This function loops through reminderDays internally
             await NotificationService.createScheduledNotification(
               medicineId: med.id,
+              uuid: uuid,
               noObj: medicineNotice,
               daysToRepeat: med.reminderDays,
               time: TimeOfDay(
@@ -95,6 +96,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       // 2. Call Service (Use a local variable for clarity)
       final medService = MedicationService();
+
       print("--- BLOC: Calling MedicationService.addUserSchedule ---");
       await medService.addUserSchedule(uuid, event.medInfo);
       print("--- BLOC: MedicationService Call Finished ---");
@@ -114,13 +116,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             hour: event.medInfo.reminderHour!,
             minute: event.medInfo.reminderMinute!),
         medicineId: event.medInfo.id,
+        uuid: uuid,
       );
       print("--- BLOC: Notifications Scheduled ---");
 
       // 4. Update State
       // Logic: If you want the Home Page to refresh properly,
       // it's better to add the new med to the existing list or trigger a Fetch event.
-      emit(HomeSuccessState(medications: [event.medInfo]));
+      emit(
+        HomeSuccessState(medications: [
+          ...[event.medInfo]
+        ]),
+      );
       print("--- BLOC: Success Emitted ---");
     } catch (e, stacktrace) {
       print("--- BLOC ERROR: $e ---");

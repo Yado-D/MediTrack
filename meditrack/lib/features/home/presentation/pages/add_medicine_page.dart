@@ -18,6 +18,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   int selectedTypeIndex = 1;
   String selectedTiming = "After meals";
   final TextEditingController medTitleController = TextEditingController();
+  final TextEditingController pillNumController = TextEditingController();
   List<int> reminderDays = [];
   TimeOfDay? reminderTime;
 
@@ -115,11 +116,23 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                     const SizedBox(height: 40),
                     const Text("Medical Info",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                     TextField(
                       controller: medTitleController,
                       decoration: const InputDecoration(
                         hintText: "Name of pill, e.g. Omega 3",
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    const Text("Pills Number",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    TextField(
+                      controller: pillNumController,
+                      decoration: const InputDecoration(
+                        hintText: "pill number, e.g. 20",
                         border: InputBorder.none,
                         hintStyle: TextStyle(color: Colors.grey),
                       ),
@@ -225,7 +238,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                   "reminder_days": reminderDays,
                   "reminder_hour": reminderTime!.hour,
                   "reminder_minute": reminderTime!.minute,
-                  "total_pills_count": null,
+                  "total_pills_count": pillNumController.text,
+                  'is_time_to_take_pill': false,
                   "created_at": DateTime.now().toIso8601String(),
                 };
 

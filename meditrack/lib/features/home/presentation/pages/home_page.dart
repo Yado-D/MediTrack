@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:meditrack/config/routes/name.dart';
 import 'package:meditrack/features/home/domain/med_user_data.dart';
 import 'package:meditrack/features/home/presentation/bloc/home_bloc.dart';
@@ -233,7 +234,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       children: [
         Text("Hey, ${username}!",
-            style: TextStyle(color: Colors.grey.shade500)),
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade900)),
         const Spacer(),
         IconButton(
           icon: const Icon(Icons.notifications_none),
@@ -279,7 +280,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildDateSelector() {
     return Row(
       children: [
-        const Text("Wednesday",
+        Text(DateFormat('EEEE').format(DateTime.now()),
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
         Icon(Icons.keyboard_arrow_down, size: 32, color: Colors.grey.shade700),
       ],

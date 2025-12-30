@@ -25,6 +25,7 @@ class NotificationService {
     required GeneralNotificationModel noObj,
     required List<int> daysToRepeat,
     required TimeOfDay time,
+    required String uuid,
   }) async {
     String localTimeZone =
         await AwesomeNotifications().getLocalTimeZoneIdentifier();
@@ -43,6 +44,10 @@ class NotificationService {
           category: NotificationCategory.Reminder,
           notificationLayout: NotificationLayout.Default,
           // This makes the notification stick until "Mark Taken" is pressed
+          payload: {
+            'userId': uuid,
+            'scheduleId': notificationId.toString(),
+          },
           fullScreenIntent: true,
           criticalAlert: true,
           wakeUpScreen: true,

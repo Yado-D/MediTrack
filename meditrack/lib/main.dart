@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:meditrack/features/home/presentation/bloc/home_bloc.dart';
 import 'package:meditrack/services/get_current_user.dart';
 import 'package:meditrack/services/global.dart';
+import 'package:meditrack/services/notifications_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'config/routes/name.dart';
@@ -42,6 +43,14 @@ void main() async {
             channelGroupName: 'Basic group')
       ],
       debug: true);
+  await AwesomeNotifications().setListeners(
+      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+      onNotificationCreatedMethod:
+          NotificationController.onNotificationCreatedMethod,
+      onNotificationDisplayedMethod: NotificationController
+          .onNotificationDisplayedMethod, // <--- THIS IS THE KEY ONE
+      onDismissActionReceivedMethod:
+          NotificationController.onDismissActionReceivedMethod);
   runApp(const MyApp());
 }
 

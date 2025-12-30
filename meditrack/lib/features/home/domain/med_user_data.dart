@@ -11,8 +11,9 @@ class MedicationModel {
   final int? reminderHour;
   final int? reminderMinute;
   final int? totalPillsCount;
-  final String createdAt;
   final int? pillsTaken;
+  final bool isTimeToTakePill;
+  final String createdAt;
 
   MedicationModel({
     required this.id,
@@ -25,8 +26,9 @@ class MedicationModel {
     this.reminderHour,
     this.reminderMinute,
     this.totalPillsCount,
-    required this.createdAt,
     required this.pillsTaken,
+    required this.isTimeToTakePill,
+    required this.createdAt,
   });
 
   // Helper: Converts the stored String color back to a Flutter Color object
@@ -60,6 +62,7 @@ class MedicationModel {
       'reminder_minute': reminderMinute,
       'total_pills_count': totalPillsCount,
       'pills_taken': pillsTaken,
+      'is_time_to_take_pill': isTimeToTakePill,
       'created_at': createdAt,
     };
   }
@@ -67,18 +70,19 @@ class MedicationModel {
   // Creates a Model from a Map (when reading from Database/JSON)
   factory MedicationModel.fromMap(Map<String, dynamic> map) {
     return MedicationModel(
-      id: map['id']?.toInt() ?? 0,
+      id: int.tryParse(map['id']?.toString() ?? '') ?? 0,
       name: map['name'] ?? '',
       dosage: map['dosage'] ?? '',
       typeLabel: map['type_label'] ?? '',
       typeColor: map['type_color'] ?? '',
       instructions: map['instructions'] ?? '',
-      // Handles conversion of dynamic list from JSON to List<int>
       reminderDays: List<int>.from(map['reminder_days'] ?? []),
-      reminderHour: map['reminder_hour']?.toInt(),
-      reminderMinute: map['reminder_minute']?.toInt(),
-      totalPillsCount: map['total_pills_count']?.toInt(),
-      pillsTaken: map['pills_taken'],
+      reminderHour: int.tryParse(map['reminder_hour']?.toString() ?? ''),
+      reminderMinute: int.tryParse(map['reminder_minute']?.toString() ?? ''),
+      totalPillsCount:
+          int.tryParse(map['total_pills_count']?.toString() ?? '') ?? 0,
+      pillsTaken: int.tryParse(map['pills_taken']?.toString() ?? '') ?? 0,
+      isTimeToTakePill: map['is_time_to_take_pill'] ?? false,
       createdAt: map['created_at'] ?? '',
     );
   }
@@ -97,6 +101,7 @@ class MedicationModel {
     int? reminderMinute,
     int? totalPillsCount,
     int? pills_taken,
+    bool? isTimeToTakePill,
     String? createdAt,
   }) {
     return MedicationModel(
@@ -111,6 +116,7 @@ class MedicationModel {
       reminderMinute: reminderMinute ?? this.reminderMinute,
       totalPillsCount: totalPillsCount ?? this.totalPillsCount,
       pillsTaken: pillsTaken ?? this.pillsTaken,
+      isTimeToTakePill: isTimeToTakePill ?? this.isTimeToTakePill,
       createdAt: createdAt ?? this.createdAt,
     );
   }
