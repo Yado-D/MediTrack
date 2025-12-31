@@ -57,7 +57,7 @@ class NotificationController {
       ReceivedAction receivedAction) async {
     print("Notification action received: ${receivedAction.id}");
 
-    if (receivedAction.channelKey == 'Basic_channel' && Platform.isIOS) {
+    if (receivedAction.channelKey == 'basic_channel' && Platform.isIOS) {
       AwesomeNotifications().getGlobalBadgeCounter().then(
           (value) => AwesomeNotifications().setGlobalBadgeCounter(value - 1));
     }

@@ -12,7 +12,8 @@ class MedicationModel {
   final int? reminderMinute;
   final int? totalPillsCount;
   final int? pillsTaken;
-  final bool isTimeToTakePill;
+  final bool device_triggered;
+
   final String createdAt;
 
   MedicationModel({
@@ -27,7 +28,7 @@ class MedicationModel {
     this.reminderMinute,
     this.totalPillsCount,
     required this.pillsTaken,
-    required this.isTimeToTakePill,
+    required this.device_triggered,
     required this.createdAt,
   });
 
@@ -62,7 +63,7 @@ class MedicationModel {
       'reminder_minute': reminderMinute,
       'total_pills_count': totalPillsCount,
       'pills_taken': pillsTaken,
-      'is_time_to_take_pill': isTimeToTakePill,
+      'device_triggered': device_triggered,
       'created_at': createdAt,
     };
   }
@@ -82,7 +83,7 @@ class MedicationModel {
       totalPillsCount:
           int.tryParse(map['total_pills_count']?.toString() ?? '') ?? 0,
       pillsTaken: int.tryParse(map['pills_taken']?.toString() ?? '') ?? 0,
-      isTimeToTakePill: map['is_time_to_take_pill'] ?? false,
+      device_triggered: map['device_triggered'] ?? false,
       createdAt: map['created_at'] ?? '',
     );
   }
@@ -101,7 +102,8 @@ class MedicationModel {
     int? reminderMinute,
     int? totalPillsCount,
     int? pills_taken,
-    bool? isTimeToTakePill,
+    bool? isTimeToTakePill1,
+    bool? isTimeToTakePill2,
     String? createdAt,
   }) {
     return MedicationModel(
@@ -116,7 +118,7 @@ class MedicationModel {
       reminderMinute: reminderMinute ?? this.reminderMinute,
       totalPillsCount: totalPillsCount ?? this.totalPillsCount,
       pillsTaken: pillsTaken ?? this.pillsTaken,
-      isTimeToTakePill: isTimeToTakePill ?? this.isTimeToTakePill,
+      device_triggered: isTimeToTakePill1 ?? this.device_triggered,
       createdAt: createdAt ?? this.createdAt,
     );
   }

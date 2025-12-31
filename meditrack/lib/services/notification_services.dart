@@ -6,15 +6,19 @@ import '../utils/notifications_utils.dart';
 
 class NotificationService {
   // 1. Instant Notification
-  static Future<void> createNotification(GeneralNotificationModel noObj) async {
+  static Future<void> createNotification(GeneralNotificationModel noObj,
+      {Map<String, String>? payload}) async {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: createUniqueId(),
-        channelKey: 'Basic_channel',
+        channelKey: 'basic_channel',
         title: 'MediTrack: ${noObj.msgTitle}',
         body: noObj.msgBody,
         notificationLayout: NotificationLayout.Default,
         category: NotificationCategory.Reminder,
+        payload: payload,
+        criticalAlert: true,
+        wakeUpScreen: true,
       ),
     );
   }

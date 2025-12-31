@@ -21,16 +21,11 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   final TextEditingController pillNumController = TextEditingController();
   List<int> reminderDays = [];
   TimeOfDay? reminderTime;
+  String reminder_am_pm = '';
 
   final List<Map<String, dynamic>> medTypes = [
-    {'icon': Icons.circle, 'color': Colors.grey, 'label': 'Tablet'},
     {'icon': Icons.medication, 'color': Colors.orange, 'label': 'Capsule'},
     {'icon': Icons.vaccines, 'color': Colors.redAccent, 'label': 'Injection'},
-    {'icon': Icons.water_drop, 'color': Colors.cyan, 'label': 'Drops'},
-    {'icon': Icons.sanitizer, 'color': Colors.teal, 'label': 'Cream'},
-    {'icon': Icons.biotech, 'color': Colors.blue, 'label': 'Ampoule'},
-    {'icon': Icons.air, 'color': Colors.brown, 'label': 'Inhaler'},
-    {'icon': Icons.science, 'color': Colors.purple, 'label': 'Syrup'},
   ];
 
   final List<String> timings = ["Before meals", "After meals", "With meals"];
@@ -190,8 +185,14 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           setState(() {
             reminderDays = schedule.daysOfTheWeek;
             reminderTime = schedule.timeOfDay;
+            reminder_am_pm = schedule.timeOfDay.period.name.toString();
           });
+          print(
+              "...............................................schedule period : ${schedule.timeOfDay.period}.......");
         }
+
+// 3. CHECK THE TIME ZONE
+        print("My Time: ${schedule?.timeOfDay}");
       },
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -240,10 +241,13 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                   "reminder_minute": reminderTime!.minute,
                   "total_pills_count": pillNumController.text,
                   'is_time_to_take_pill': false,
+                  'reminder_am_pm': reminder_am_pm,
+                  'device_triggered': false,
                   "created_at": DateTime.now().toIso8601String(),
                 };
 
                 final medInfo = MedicationModel.fromMap(medicationData);
+                print("######## ######");
                 context
                     .read<HomeBloc>()
                     .add(AddUserSchedulesEvent(medInfo: medInfo));

@@ -12,6 +12,8 @@ import 'package:meditrack/services/get_current_user.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/database_listener.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -35,6 +37,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
     print("...............................user - > $user");
+    if (user != null && user.uid != null) {
+      DatabaseListener.startListeningForUser(user.uid!);
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

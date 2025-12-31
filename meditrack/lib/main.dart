@@ -27,14 +27,23 @@ void main() async {
             channelName: 'Basic notifications',
             channelDescription: 'Notification channel for basic tests',
             defaultColor: Color(0xFF9D50DD),
-            ledColor: Colors.white),
+            ledColor: Colors.white,
+            importance: NotificationImportance.Max,
+            playSound: true,
+            enableVibration: true,
+            channelShowBadge: true),
         NotificationChannel(
             channelGroupKey: 'basic_channel_group',
             channelKey: 'schedule_channel',
-            channelName: 'Basic notifications',
-            channelDescription: 'Notification channel for basic tests',
+            channelName: 'Scheduled notifications',
+            channelDescription:
+                'Notification channel for scheduled medicine reminders',
             defaultColor: Color(0xFF9D50DD),
-            ledColor: Colors.white)
+            ledColor: Colors.white,
+            importance: NotificationImportance.Max,
+            playSound: true,
+            enableVibration: true,
+            channelShowBadge: true)
       ],
       // Channel groups are only visual and are not required
       channelGroups: [
